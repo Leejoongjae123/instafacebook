@@ -100,12 +100,7 @@ def get_user_history(connection):
     except mysql.connector.Error as error:
         print(f"MySQL 연결 오류: {error}")
         
-    finally:
-        # 연결 종료
-        if 'connection' in locals() and connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL 연결이 종료되었습니다.")
+
     return results
 
 def GetDetailProfile(inputData):
@@ -290,43 +285,43 @@ def run(connection):
             commentData=["D",commentCount,timeNow,result['ID']]
             reshareData=["E",reshareCount,timeNow,result['ID']]
 
-            try:                
-                cursor = connection.cursor()
+            # try:                
+            cursor = connection.cursor()
 
-                # USER_HIS 테이블에 데이터 삽입
-                insert_query = """
-                INSERT INTO USER_HIS (STATE,COUNT,REG_DTM,USERID)
-                VALUES (%s, %s, %s,%s)
-                """
-                print('followerData:',followerData)
-                print('likeData:',likeData)
-                print('viewData:',viewData)
-                print('commentData:',commentData)
-                print('reshareData:',reshareData)
+            # USER_HIS 테이블에 데이터 삽입
+            insert_query = """
+            INSERT INTO USER_HIS (STATE,COUNT,REG_DTM,USERID)
+            VALUES (%s, %s, %s,%s)
+            """
+            print('followerData:',followerData)
+            print('likeData:',likeData)
+            print('viewData:',viewData)
+            print('commentData:',commentData)
+            print('reshareData:',reshareData)
 
-                # 각 데이터 삽입
-                if followerCount != 0 and followerCount != None:
-                    cursor.execute(insert_query, followerData)
-                if likeCount != 0 and likeCount != None:
-                    cursor.execute(insert_query, likeData) 
-                if viewCount != 0 and viewCount != None:
-                    cursor.execute(insert_query, viewData)
-                if commentCount != 0 and commentCount != None:
-                    cursor.execute(insert_query, commentData)
-                if reshareCount != 0 and reshareCount != None:
-                    cursor.execute(insert_query, reshareData)
+            # 각 데이터 삽입
+            if followerCount != 0 and followerCount != None:
+                cursor.execute(insert_query, followerData)
+            if likeCount != 0 and likeCount != None:
+                cursor.execute(insert_query, likeData) 
+            if viewCount != 0 and viewCount != None:
+                cursor.execute(insert_query, viewData)
+            if commentCount != 0 and commentCount != None:
+                cursor.execute(insert_query, commentData)
+            if reshareCount != 0 and reshareCount != None:
+                cursor.execute(insert_query, reshareData)
 
-                connection.commit()
-                print("데이터가 성공적으로 삽입되었습니다.")
+            connection.commit()
+            print("데이터가 성공적으로 삽입되었습니다.")
 
-            except mysql.connector.Error as error:
-                print(f"MySQL 연결 오류: {error}")
+            # except mysql.connector.Error as error:
+            #     print(f"MySQL 연결 오류: {error}")
                 
-            finally:
-                if 'connection' in locals() and connection.is_connected():
-                    cursor.close()
-                    connection.close()
-                    print("MySQL 연결이 종료되었습니다.")
+            # finally:
+            #     if 'connection' in locals() and connection.is_connected():
+            #         cursor.close()
+            #         connection.close()
+            #         print("MySQL 연결이 종료되었습니다.")
             
             print(f"followerCount:{followerCount}, likeCount:{likeCount}, commentCount:{commentCount}, viewCount:{viewCount}")
         elif platform == 'F':
