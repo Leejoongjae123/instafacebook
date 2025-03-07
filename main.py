@@ -253,8 +253,15 @@ def GetFacbook(inputData):
         json.dump(results, f, ensure_ascii=False, indent=4)
     print("followerCount:",followerCount,"likeCount:",likeCount,"commentCount:",commentCount,"viewCount:",viewCount,"reshareCount:",reshareCount)
     return followerCount,likeCount,commentCount,viewCount,reshareCount
-def run(connection):
+def run():
 #=========프로필 정보 가져오기
+# DB 정보를 입력해주세요
+    connection=mysql.connector.connect(
+            host='43.200.242.185',
+            port=3306,
+            user='toys12',
+            password='!qaz2wsx',
+            database='insta')
     try:
         cursor = connection.cursor()
         print("데이터베이스 연결 성공")
@@ -386,15 +393,9 @@ def run(connection):
 print("실행")
 # 처음 한 번 실행
 
-# DB 정보를 입력해주세요
-connection=mysql.connector.connect(
-            host='43.200.242.185',
-            port=3306,
-            user='toys12',
-            password='!qaz2wsx',
-            database='insta')
 
-run(connection)
+
+run()
 
 # 매일 오전 6시에 실행되도록 스케줄 설정
 schedule.every().day.at("06:00").do(run)
