@@ -106,13 +106,13 @@ def get_user_history(connection):
 def GetDetailProfile(inputData):
     username=inputData['USERNAME']
 
-    url = "https://instagram-scraper-2022.p.rapidapi.com/ig/info_username/"
+    url = "https://real-time-instagram-scraper-api1.p.rapidapi.com/v1/user_info"
 
-    querystring = {"user":username,"nocors":"false"}
+    querystring = {"username_or_id":username}
 
     headers = {
         "x-rapidapi-key": "2e4a105e81mshe8534d478890bf7p14afbdjsnf894b6f56b1f",
-        "x-rapidapi-host": "instagram-scraper-2022.p.rapidapi.com"
+        "x-rapidapi-host": "real-time-instagram-scraper-api1.p.rapidapi.com"
     }
 
     response = requests.get(url, headers=headers, params=querystring)
@@ -132,17 +132,17 @@ def GetInstaProfile(inputData):
 
 def GetInsta(inputData):
     print("instagram")
-    url_parts = inputData['PAGE_URL'].split('/')
-    shortcode = url_parts[-1] if url_parts[-1] else url_parts[-2]
-    print(shortcode)
+    # url_parts = inputData['PAGE_URL'].split('/')
+    # shortcode = url_parts[-1] if url_parts[-1] else url_parts[-2]
+    # print(shortcode)
+    page_url=inputData['PAGE_URL']
 
-    url = "https://instagram-scraper-2022.p.rapidapi.com/ig/post_info/"
-
-    querystring = {"shortcode":shortcode,"nocors":"false"}
+    url = "https://real-time-instagram-scraper-api1.p.rapidapi.com/v1/media_info"
+    querystring = {"code_or_id_or_url":page_url}
 
     headers = {
         "x-rapidapi-key": "2e4a105e81mshe8534d478890bf7p14afbdjsnf894b6f56b1f",
-        "x-rapidapi-host": "instagram-scraper-2022.p.rapidapi.com"
+        "x-rapidapi-host": "real-time-instagram-scraper-api1.p.rapidapi.com"
     }
 
     response = requests.get(url, headers=headers, params=querystring)
@@ -277,9 +277,9 @@ def run():
         results = json.load(f)
     # 파일 경로 지정
     for result in results:
-        # if result['PLATFORM'] == 'F':
-        #     print("===============")
-        #     continue
+        if result['PLATFORM'] == 'F':
+            print("===============")
+            continue
         
         platform=result['PLATFORM']
         username=result['USERNAME']
