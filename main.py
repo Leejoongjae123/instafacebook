@@ -277,9 +277,9 @@ def run():
         results = json.load(f)
     # 파일 경로 지정
     for result in results:
-        if result['PLATFORM'] == 'F':
-            print("===============")
-            continue
+        # if result['PLATFORM'] == 'F':
+        #     print("===============")
+        #     continue
         
         platform=result['PLATFORM']
         username=result['USERNAME']
